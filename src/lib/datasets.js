@@ -17,7 +17,10 @@ let configPromise = null
 export function loadConfig() {
   if (!configPromise) {
     const url = `${import.meta.env.BASE_URL}datasets.json`
-    configPromise = fetch(url)
+    // 'no-cache' forces the browser to revalidate with the server every time,
+    // so editing datasets.json on the host shows up on the next load (a cheap
+    // 304 when unchanged) instead of being served stale from cache.
+    configPromise = fetch(url, { cache: 'no-cache' })
       .then(res => {
         if (!res.ok) {
           throw new Error(`datasets.json HTTP ${res.status}`)

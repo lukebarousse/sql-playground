@@ -31,7 +31,7 @@ and changes take effect on the next page load:
   "datasets": [
     {
       "id": "jobs",
-      "label": "SQL Jobs Database (2023)",
+      "label": "Job Postings Database",
       "data_url": "https://storage.googleapis.com/jobs_db/jobs_2023.db",
       "data_format": "sqlite",
       "inquiry_url": "https://storage.googleapis.com/jobs_db/jobs_2023_inquiries.json"
