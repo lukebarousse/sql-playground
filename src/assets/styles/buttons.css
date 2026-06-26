@@ -28,7 +28,7 @@ button.primary:hover {
 }
 
 button.secondary {
-  background: white;
+  background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-big);
   min-width: 83px;

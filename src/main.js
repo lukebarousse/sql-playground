@@ -3,6 +3,7 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 import { createVfm, VueFinalModal, useVfm } from 'vue-final-modal'
+import { initTheme } from '@/lib/theme'
 
 import '@/assets/styles/variables.css'
 import '@/assets/styles/typography.css'
@@ -14,6 +15,9 @@ import '@/assets/styles/messages.css'
 import 'vue-multiselect/dist/vue-multiselect.css'
 import '@/assets/styles/multiselect.css'
 import 'vue-final-modal/style.css'
+
+// Apply the saved/OS theme before mount to avoid a flash of the wrong theme.
+initTheme()
 
 if (!['localhost', '127.0.0.1'].includes(location.hostname)) {
   import('./registerServiceWorker') // eslint-disable-line no-unused-expressions

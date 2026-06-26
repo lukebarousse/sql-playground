@@ -60,6 +60,12 @@ export default {
     }
     state.tabs.splice(index, 1)
   },
+  closeAllTabs(state) {
+    state.tabs = []
+    state.currentTab = null
+    state.currentTabId = null
+    state.untitledLastIndex = 0
+  },
   setCurrentTabId(state, id) {
     try {
       state.currentTabId = id

@@ -1,53 +1,83 @@
-<p align="center">
-   <img src="src/assets/images/Logo.svg"/>
-</p>
+# SQL Playground — Luke Barousse course edition
 
-# sqliteviz
+An in-browser SQL playground for the SQL for Data Analytics course. Students
+open a link, a SQLite database loads in their browser, and they run queries
+with charts — no install, no server, nothing leaves their machine.
 
-Sqliteviz is a single-page offline-first PWA for fully client-side visualisation
-of SQLite databases, CSV, JSON or NDJSON files.
+This is a fork of the excellent open-source **[sqliteviz](https://github.com/lana-k/sqliteviz)**
+project, customized for the course. See [`NOTICE`](NOTICE) and [`LICENSE`](LICENSE)
+for attribution (Apache-2.0).
 
-With sqliteviz you can:
+## What this fork adds
 
-- run SQL queries against a SQLite database and create [Plotly][11] charts, graphs and pivot tables based on the result sets
-- import a CSV/JSON/NDJSON file into a SQLite database and visualize imported data
-- export result set to CSV file
-- manage inquiries and run them against different databases
-- import/export inquiries from/to a JSON file
-- export a modified SQLite database
-- use it offline from your OS application menu like any other desktop app
+- **Remembers the last dataset across refreshes.** Upstream resets to the bundled
+  demo database when the page reloads. Here, the last dataset a student loaded is
+  saved and automatically restored on refresh.
+- **Dataset switcher.** A dropdown in the top bar lets students switch datasets at
+  runtime (no rebuild, no redeploy). Datasets are defined in
+  [`public/datasets.json`](public/datasets.json).
+- **Light / dark mode.** A toggle in the top bar, persisted and defaulting to the
+  visitor's OS preference. The SQL editor (CodeMirror) is themed too.
+- **Course branding** in the navbar, title, and welcome screen.
 
-https://user-images.githubusercontent.com/24638357/128249848-f8fab0f5-9add-46e0-a9c1-dd5085a8623e.mp4
+## Managing datasets (no rebuild needed)
 
-## Quickstart
+`public/datasets.json` is served as a static file, so you can edit it on the host
+and changes take effect on the next page load:
 
-The latest release of sqliteviz is deployed on [sqliteviz.com/app][6].
+```json
+{
+  "default": "jobs",
+  "datasets": [
+    {
+      "id": "jobs",
+      "label": "SQL Jobs Database (2023)",
+      "data_url": "https://storage.googleapis.com/jobs_db/jobs_2023.db",
+      "data_format": "sqlite",
+      "inquiry_url": "https://storage.googleapis.com/jobs_db/jobs_2023_inquiries.json"
+    }
+  ]
+}
+```
 
-## Wiki
+- `default` — the dataset loaded for a first-time visitor with no saved choice.
+  Set it to `null` to instead show the upload/welcome screen on the bare domain.
+- Each dataset mirrors the upstream `/load` parameters (`data_url`,
+  `data_format`, `inquiry_url`).
 
-For user documentation, check out sqliteviz [documentation][7].
+Direct deep links still work, e.g.:
 
-## Motivation
+```
+/#/load?data_url=https://storage.googleapis.com/jobs_db/jobs_2023.db&data_format=sqlite&inquiry_url=https://storage.googleapis.com/jobs_db/jobs_2023_inquiries.json
+```
 
-It's a kind of middleground between [Plotly Falcon][1] and [Redash][2].
+## Develop
 
-## Components
+```sh
+npm install
+npm run dev      # local dev server
+npm run build    # production build into dist/
+npm run serve    # preview the production build
+```
 
-It is built on top of [react-chart-editor][3], [PivotTable.js][12], [sql.js][4]
-and [Vue-Codemirror][8] in [Vue.js][5]. CSV parsing is performed with [Papa Parse][9].
-Graphs are visualized with [Sigma.js][13] and [Graphology][14].
+## Deploy
 
-[1]: https://github.com/plotly/falcon
-[2]: https://github.com/getredash/redash
-[3]: https://github.com/plotly/react-chart-editor
-[4]: https://github.com/sql-js/sql.js
-[5]: https://github.com/vuejs/vue
-[6]: https://sqliteviz.com/app/
-[7]: https://sqliteviz.com/docs
-[8]: https://github.com/surmon-china/vue-codemirror#readme
-[9]: https://www.papaparse.com/
-[10]: https://github.com/lana-k/sqliteviz/wiki/Predefined-queries
-[11]: https://github.com/plotly/plotly.js
-[12]: https://github.com/nicolaskruchten/pivottable
-[13]: https://www.sigmajs.org/
-[14]: https://graphology.github.io/
+See [`DEPLOY.md`](DEPLOY.md) for hosting on Cloudflare Pages at
+`sql.lukebarousse.com`.
+
+## Staying up to date with sqliteviz
+
+The upstream project is configured as the `upstream` git remote:
+
+```sh
+git fetch upstream
+git merge upstream/master   # resolve conflicts, then rebuild
+```
+
+---
+
+Built on [sqliteviz](https://github.com/lana-k/sqliteviz) — itself built on
+[react-chart-editor](https://github.com/plotly/react-chart-editor),
+[PivotTable.js](https://github.com/nicolaskruchten/pivottable),
+[sql.js](https://github.com/sql-js/sql.js) and
+[CodeMirror](https://codemirror.net/) in [Vue.js](https://github.com/vuejs/vue).

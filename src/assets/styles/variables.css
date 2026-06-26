@@ -34,6 +34,9 @@
   --color-text-active: var(--color-blue-dark-2);
   --color-text-error: var(--color-red);
 
+  /* Transparent version of the surface color, for fade-out gradients */
+  --color-surface-fade: rgba(255, 255, 255, 0);
+
   --shadow: 0 1px 2px rgba(42, 63, 95, 0.7);
   --shadow-1: 0 2px 9px rgba(80, 103, 132, 0.2);
 
@@ -45,4 +48,56 @@
 
 .plotly-editor--theme-provider {
   --sidebar-width: 112px;
+}
+
+/*
+ * Dark theme. Applied via <html data-theme="dark"> (see src/lib/theme.js).
+ * We override the semantic tokens with literal dark values, plus the few base
+ * palette tokens that components reference directly. --color-white is remapped
+ * to a dark surface so the many `background: var(--color-white)` rules flip
+ * automatically; tokens that must stay light (e.g. text on accents) are set
+ * explicitly below.
+ */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Base tokens used directly by components */
+  --color-white: #1b222e;
+  --color-gray-dark: #aab6c6;
+  --color-gray-light-2: #2a3340;
+  --color-gray-light-3: #3a4554;
+  --color-gray-light-4: #232c39;
+
+  /* Surfaces */
+  --color-bg-light: #161b24;
+  --color-bg-light-2: #1f2733;
+  --color-bg-light-3: #232c39;
+  --color-bg-light-4: #232c39;
+  --color-bg-dark: #0f141b;
+  --color-bg-warning: #3d3415;
+  --color-bg-danger: #45211c;
+
+  /* Accents and status */
+  --color-danger: #ff6b5e;
+  --color-accent: #2aa3ff;
+  --color-accent-shade: #5cb8ff;
+
+  /* Borders */
+  --color-border-light: #283140;
+  --color-border: #36414f;
+  --color-border-dark: #4a5666;
+
+  /* Text */
+  --color-text-light: #ffffff;
+  --color-text-light-2: #8290a3;
+  --color-text-base: #d4dce8;
+  --color-text-active: #ffffff;
+  --color-text-error: #ff6b5e;
+
+  /* Shadows */
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-1: 0 2px 9px rgba(0, 0, 0, 0.45);
+
+  /* Transparent version of --color-white (#1b222e) for fade-out gradients */
+  --color-surface-fade: rgba(27, 34, 46, 0);
 }

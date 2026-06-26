@@ -1,0 +1,20 @@
+{
+  "_comment": "Course datasets shown in the dataset switcher. Edit this file to add/remove datasets. It is served as a static file, so changes take effect on the next page load WITHOUT rebuilding the app. 'default' is loaded for first-time visitors who have no remembered dataset.",
+  "default": "jobs",
+  "datasets": [
+    {
+      "id": "jobs",
+      "label": "SQL Jobs Database (2023)",
+      "data_url": "https://storage.googleapis.com/jobs_db/jobs_2023.db",
+      "data_format": "sqlite",
+      "inquiry_url": "https://storage.googleapis.com/jobs_db/jobs_2023_inquiries.json"
+    },
+    {
+      "id": "invoices",
+      "label": "SQL Invoices Database (2023)",
+      "data_url": "https://storage.googleapis.com/jobs_db/invoices_2023.db",
+      "data_format": "sqlite",
+      "inquiry_url": "https://storage.googleapis.com/jobs_db/invoices_2023_inquiries.json"
+    }
+  ]
+}

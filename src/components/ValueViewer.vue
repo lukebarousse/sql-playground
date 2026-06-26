@@ -64,8 +64,10 @@ import 'codemirror/addon/fold/foldgutter.js'
 import 'codemirror/addon/fold/foldgutter.css'
 import 'codemirror/addon/fold/brace-fold.js'
 import 'codemirror/theme/neo.css'
+import 'codemirror/theme/material-darker.css'
 import cIo from '@/lib/utils/clipboardIo'
 import Logs from '@/components/Common/Logs'
+import { cmThemeFor, getActiveTheme } from '@/lib/theme'
 
 export default {
   name: 'ValueViewer',
@@ -91,7 +93,8 @@ export default {
       currentFormat: this.defaultFormat,
       lineWrapping: false,
       formattedJson: '',
-      messages: []
+      messages: [],
+      currentTheme: getActiveTheme()
     }
   },
   computed: {
@@ -99,7 +102,7 @@ export default {
       return {
         tabSize: 4,
         mode: { name: 'javascript', json: true },
-        theme: 'neo',
+        theme: cmThemeFor(this.currentTheme),
         lineNumbers: true,
         line: true,
         lineWrapping: this.lineWrapping,
@@ -146,7 +149,16 @@ export default {
       }
     }
   },
+  mounted() {
+    window.addEventListener('themechange', this.onThemeChange)
+  },
+  beforeUnmount() {
+    window.removeEventListener('themechange', this.onThemeChange)
+  },
   methods: {
+    onThemeChange(event) {
+      this.currentTheme = event.detail
+    },
     formatJson(jsonStr) {
       try {
         this.formattedJson = JSON.stringify(JSON.parse(jsonStr), null, 4)

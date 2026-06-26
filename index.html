@@ -6,7 +6,25 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="favicon.png" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <title>sqliteviz</title>
+    <title>SQL Playground · Luke Barousse</title>
+    <script>
+      // Set the theme as early as possible so the loading screen below doesn't
+      // flash light when dark mode is active. Mirrors src/lib/theme.js.
+      (function () {
+        try {
+          var stored = localStorage.getItem('sqliteviz.theme')
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.setAttribute(
+            'data-theme',
+            stored || (prefersDark ? 'dark' : 'light')
+          )
+        } catch (e) {
+          /* ignore */
+        }
+      })()
+    </script>
     <style>
       #sqliteviz-loading-wrapper {
         position: fixed;
@@ -15,6 +33,10 @@
         left: 0;
         top: 0;
         background-color: white;
+      }
+
+      [data-theme='dark'] #sqliteviz-loading-wrapper {
+        background-color: #161b24;
       }
 
       #sqliteviz-loading-text {
@@ -26,6 +48,10 @@
         color: #506784;
         font-family: sans-serif;
         font-size: 20px;
+      }
+
+      [data-theme='dark'] #sqliteviz-loading-text {
+        color: #d4dce8;
       }
 
       #sqliteviz-loading-wrapper svg {

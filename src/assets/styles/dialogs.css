@@ -6,7 +6,7 @@
 .dialog .vfm__content {
   border-radius: var(--border-radius-big);
   box-shadow: 0px 2px 9px rgba(80, 103, 132, 0.8);
-  background-color: white;
+  background-color: var(--color-white);
   overflow: hidden;
 }
 

@@ -117,7 +117,10 @@ export default {
   width: 100%;
   height: 100px;
   box-sizing: border-box;
-  background-image: linear-gradient(white 73%, rgba(255, 255, 255, 0));
+  background-image: linear-gradient(
+    var(--color-white) 73%,
+    var(--color-surface-fade)
+  );
   z-index: 2;
 }
 .schema,

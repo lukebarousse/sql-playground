@@ -80,7 +80,7 @@ export default {
 .unchecked {
   width: 18px;
   height: 18px;
-  background-color: white;
+  background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-medium);
   box-sizing: border-box;

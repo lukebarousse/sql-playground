@@ -1,0 +1,12 @@
+SQL Playground (Luke Barousse course edition)
+Copyright 2024 Luke Barousse
+
+This product is a fork of sqliteviz:
+  https://github.com/lana-k/sqliteviz
+  Copyright the sqliteviz authors
+  Licensed under the Apache License, Version 2.0.
+
+The original sqliteviz source is used under the terms of the Apache License,
+Version 2.0 (see the LICENSE file). Modifications by Luke Barousse include
+course branding, a light/dark theme toggle, and a configurable dataset
+switcher that remembers the last loaded dataset across page refreshes.

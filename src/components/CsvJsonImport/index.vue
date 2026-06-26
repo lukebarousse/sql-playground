@@ -503,7 +503,7 @@ export default {
 }
 .no-data {
   margin-top: 32px;
-  background-color: white;
+  background-color: var(--color-white);
   border-radius: 5px;
   position: relative;
   border: 1px solid var(--color-border-light);

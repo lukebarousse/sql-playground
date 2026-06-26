@@ -1,12 +1,17 @@
 <template>
   <nav>
     <div id="nav-links">
-      <a href="https://sqliteviz.com">
-        <img src="~@/assets/images/logo_simple.svg" />
+      <a
+        id="brand"
+        href="https://www.lukebarousse.com"
+        title="Luke Barousse — SQL Playground"
+      >
+        <span class="brand-logo" role="img" aria-label="Luke Barousse"></span>
       </a>
       <router-link to="/workspace">Workspace</router-link>
       <router-link to="/inquiries">Inquiries</router-link>
       <a href="https://sqliteviz.com/docs" target="_blank">Help</a>
+      <dataset-switcher />
     </div>
     <div id="nav-buttons">
       <button
@@ -29,6 +34,7 @@
       <button id="create-btn" class="primary" @click="createNewInquiry">
         Create
       </button>
+      <theme-toggle />
       <app-diagnostic-info />
     </div>
 
@@ -91,6 +97,8 @@ import TextField from '@/components/Common/TextField'
 import CloseIcon from '@/components/svg/close'
 import storedInquiries from '@/lib/storedInquiries'
 import AppDiagnosticInfo from './AppDiagnosticInfo'
+import DatasetSwitcher from './DatasetSwitcher'
+import ThemeToggle from './ThemeToggle'
 import events from '@/lib/utils/events'
 import eventBus from '@/lib/eventBus'
 
@@ -99,7 +107,9 @@ export default {
   components: {
     TextField,
     CloseIcon,
-    AppDiagnosticInfo
+    AppDiagnosticInfo,
+    DatasetSwitcher,
+    ThemeToggle
   },
   data() {
     return {
@@ -288,6 +298,23 @@ a {
 }
 a.router-link-active {
   color: var(--color-accent);
+}
+#brand {
+  display: flex;
+  align-items: center;
+  margin-right: 36px;
+}
+#brand .brand-logo {
+  display: block;
+  width: 78px;
+  height: 42px;
+  background-image: url('../assets/images/signature-black.png');
+  background-size: contain;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+[data-theme='dark'] #brand .brand-logo {
+  background-image: url('../assets/images/signature-white.png');
 }
 button {
   margin-left: 16px;

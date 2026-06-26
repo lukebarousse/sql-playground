@@ -31,11 +31,13 @@ import Codemirror from 'codemirror-editor-vue3'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/sql/sql.js'
 import 'codemirror/theme/neo.css'
+import 'codemirror/theme/material-darker.css'
 import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/display/autorefresh.js'
 import SideToolBar from '../SideToolBar'
 import IconButton from '@/components/Common/IconButton'
 import RunIcon from '@/components/svg/run'
+import { cmThemeFor } from '@/lib/theme'
 
 export default {
   name: 'SqlEditor',
@@ -53,7 +55,7 @@ export default {
       cmOptions: {
         tabSize: 4,
         mode: 'text/x-mysql',
-        theme: 'neo',
+        theme: cmThemeFor(),
         lineNumbers: true,
         line: true,
         autoRefresh: true,
@@ -72,8 +74,17 @@ export default {
       this.$emit('update:modelValue', this.query)
     }
   },
+  mounted() {
+    window.addEventListener('themechange', this.applyEditorTheme)
+  },
+  beforeUnmount() {
+    window.removeEventListener('themechange', this.applyEditorTheme)
+  },
   methods: {
     onChange: time.debounce((value, editor) => showHint(editor), 400),
+    applyEditorTheme(event) {
+      this.$refs.cm?.cminstance?.setOption('theme', cmThemeFor(event.detail))
+    },
     focus() {
       this.$refs.cm.cminstance?.focus()
     }
@@ -108,5 +119,25 @@ export default {
 :deep(.CodeMirror-cursor) {
   width: 1px;
   background: var(--color-text-base);
+}
+</style>
+
+<!--
+  Global (unscoped) overrides: the autocomplete hint popup is rendered on
+  document.body, outside this component, so it needs non-scoped rules to pick
+  up dark mode.
+-->
+<style>
+[data-theme='dark'] .CodeMirror-hints {
+  background: var(--color-white);
+  border-color: var(--color-border);
+  box-shadow: 0 2px 9px rgba(0, 0, 0, 0.5);
+}
+[data-theme='dark'] .CodeMirror-hint {
+  color: var(--color-text-base);
+}
+[data-theme='dark'] li.CodeMirror-hint-active {
+  background: var(--color-accent);
+  color: #ffffff;
 }
 </style>

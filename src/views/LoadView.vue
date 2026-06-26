@@ -17,6 +17,7 @@ import fu from '@/lib/utils/fileIo'
 import database from '@/lib/database'
 import Logs from '@/components/Common/Logs'
 import events from '@/lib/utils/events'
+import { rememberLoad } from '@/lib/datasets'
 
 export default {
   name: 'LoadView',
@@ -54,6 +55,17 @@ export default {
     })
 
     await this.loadData(dataUrl, dataFormat)
+
+    // Remember this dataset so a page refresh restores it instead of falling
+    // back to the bundled demo database.
+    if (dataUrl && this.dataMsg.type !== 'error') {
+      rememberLoad({
+        data_url: dataUrl,
+        data_format: dataFormat,
+        inquiry_url: inquiryUrl
+      })
+    }
+
     const inquiries = await this.loadInquiries(inquiryUrl, inquiryIds)
     if (inquiries && inquiries.length > 0) {
       await this.openInquiries(inquiries, maximize)
@@ -91,6 +103,9 @@ export default {
       } else {
         await this.newDb.loadDb()
       }
+      // A new database invalidates the old tabs (they target the previous
+      // schema). Clear them so switching datasets doesn't pile up duplicates.
+      this.$store.commit('closeAllTabs')
       this.$store.commit('setDb', this.newDb)
     },
     async getSqliteDb(dataUrl) {
