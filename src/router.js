@@ -34,7 +34,15 @@ export const routes = [
   {
     path: '/load',
     name: 'Load',
-    component: LoadView
+    component: LoadView,
+    meta: { isLoad: true }
+  },
+  {
+    // Short link for a configured dataset, e.g. /#/d/invoices
+    path: '/d/:id',
+    name: 'LoadDataset',
+    component: LoadView,
+    meta: { isLoad: true }
   }
 ]
 
@@ -44,7 +52,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (!store.state.db && to.name !== 'Load') {
+  if (!store.state.db && !to.meta.isLoad) {
     // On a fresh load/refresh there is no database in memory. Try to restore
     // the last dataset the user loaded (or the configured default), so we
     // don't fall back to the bundled demo database.

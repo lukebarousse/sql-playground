@@ -17,7 +17,7 @@ import fu from '@/lib/utils/fileIo'
 import database from '@/lib/database'
 import Logs from '@/components/Common/Logs'
 import events from '@/lib/utils/events'
-import { rememberLoad } from '@/lib/datasets'
+import { rememberLoad, loadConfig } from '@/lib/datasets'
 
 export default {
   name: 'LoadView',
@@ -38,13 +38,26 @@ export default {
     }
   },
   async created() {
-    const {
+    let {
       data_url: dataUrl,
       data_format: dataFormat,
       inquiry_url: inquiryUrl,
       inquiry_id: inquiryIds,
       maximize
     } = this.$route.query
+
+    // Short dataset link: /#/d/:id (or ?dataset=id) resolves to a dataset
+    // defined in datasets.json, so course links can stay short.
+    const datasetId = this.$route.params.id || this.$route.query.dataset
+    if (datasetId && !dataUrl) {
+      const config = await loadConfig()
+      const dataset = config.datasets.find(d => d.id === datasetId)
+      if (dataset) {
+        dataUrl = dataset.data_url
+        dataFormat = dataset.data_format || 'sqlite'
+        inquiryUrl = dataset.inquiry_url
+      }
+    }
 
     events.send('share.load', null, {
       has_data_url: !!dataUrl,
