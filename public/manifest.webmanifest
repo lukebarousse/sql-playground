@@ -24,7 +24,7 @@
       "type": "image/png"
     }
   ],
-  "name": "SQL Playground · Luke Barousse",
-  "short_name": "SQL Playground",
+  "name": "SQL Editor · Luke Barousse",
+  "short_name": "SQL Editor",
   "start_url": "index.html"
 }
