@@ -50,7 +50,9 @@ export default defineConfig({
     }
   },
   build: {
-    sourcemap: true,
+    // Disabled for production: the vendor sourcemap is ~25 MB, which trips
+    // Cloudflare Pages' 25 MiB per-file limit and bloats build memory/time.
+    sourcemap: false,
     assetsInlineLimit: 10000,
     commonjsOptions: {
       include: ['sql.js', /sql-wasm.js/, /node_modules/]
