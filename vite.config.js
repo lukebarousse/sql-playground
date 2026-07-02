@@ -30,7 +30,9 @@ export default defineConfig({
         globPatterns: ['**\/*.{js,wasm,css,html,woff2,png}'],
         globIgnores: ['*.map', 'LICENSE', 'inquiries.json'],
         clientsClaim: true,
-        skipWaiting: false,
+        // Activate a new service worker immediately on the next load so
+        // deploys reach users without them closing every tab first.
+        skipWaiting: true,
         maximumFileSizeToCacheInBytes: 40000000
       }
     })
